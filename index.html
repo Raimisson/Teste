@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Callback Mercado Livre</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .box {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    #code {
+      background: #f4f4f4;
+      padding: 12px;
+      word-break: break-all;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>Autorização Mercado Livre</h1>
+
+  <p id="status">
+    Processando retorno da autorização...
+  </p>
+
+  <div id="resultado" style="display:none;">
+    <p><strong>Código de autorização:</strong></p>
+
+    <div id="code"></div>
+
+    <button onclick="copiarCodigo()">
+      Copiar código
+    </button>
+
+    <p>
+      Você pode fechar esta página depois de copiar o código.
+    </p>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  const error = params.get("error");
+
+  if (code) {
+    document.getElementById("status").textContent =
+      "Autorização recebida com sucesso.";
+
+    document.getElementById("code").textContent = code;
+    document.getElementById("resultado").style.display = "block";
+
+  } else if (error) {
+    document.getElementById("status").textContent =
+      "A autorização retornou um erro: " + error;
+
+  } else {
+    document.getElementById("status").textContent =
+      "Nenhum código de autorização foi recebido.";
+  }
+
+  function copiarCodigo() {
+    navigator.clipboard.writeText(code);
+  }
+</script>
+
+</body>
+</html>
